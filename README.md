@@ -6,22 +6,23 @@ A production-grade job application tracker. Track every application, auto-detect
 
 ## Tech stack
 
-| Layer       | Technology                               |
-|-------------|------------------------------------------|
-| Frontend    | Next.js 15 (App Router) · Tailwind CSS   |
-| State       | Redux Toolkit · TanStack React Query     |
-| Backend     | Node.js · Express · TypeScript           |
-| Database    | MongoDB Atlas · Mongoose                 |
-| Auth        | JWT (access + refresh token rotation)    |
-| Email       | Nodemailer                               |
-| Charts      | Recharts                                 |
-| Deploy      | Vercel (frontend) · Render (backend)     |
+| Layer    | Technology                             |
+| -------- | -------------------------------------- |
+| Frontend | Next.js 15 (App Router) · Tailwind CSS |
+| State    | Redux Toolkit · TanStack React Query   |
+| Backend  | Node.js · Express · TypeScript         |
+| Database | MongoDB Atlas · Mongoose               |
+| Auth     | JWT (access + refresh token rotation)  |
+| Email    | Nodemailer                             |
+| Charts   | Recharts                               |
+| Deploy   | Vercel                                 |
 
 ---
 
 ## Local development
 
 ### Prerequisites
+
 - Node.js 18+
 - MongoDB Atlas account (free tier works)
 - Gmail account with App Password (for emails — optional)
@@ -42,12 +43,14 @@ cd ../frontend && npm install
 ### 2. Configure environment variables
 
 **Backend** — copy and fill in:
+
 ```bash
 cd backend
 cp .env.example .env
 ```
 
 Required values in `backend/.env`:
+
 ```
 MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/applywise
 JWT_SECRET=<run: openssl rand -base64 64>
@@ -56,6 +59,7 @@ CLIENT_URL=http://localhost:3000
 ```
 
 Optional (emails won't send without these but the app still works):
+
 ```
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
@@ -65,6 +69,7 @@ EMAIL_FROM=Applywise <you@gmail.com>
 ```
 
 **Frontend** — copy and fill in:
+
 ```bash
 cd frontend
 cp .env.example .env.local
@@ -87,10 +92,10 @@ cd frontend && npm run dev
 
 ## Background jobs
 
-| Job                  | Schedule      | What it does                                              |
-|----------------------|---------------|-----------------------------------------------------------|
-| `staleChecker`       | Daily midnight | Marks inactive jobs stale, emails affected users a digest |
-| `followUpReminder`   | Daily 9am      | Emails reminders for un-followed applied jobs (7+ days)   |
+| Job                | Schedule       | What it does                                              |
+| ------------------ | -------------- | --------------------------------------------------------- |
+| `staleChecker`     | Daily midnight | Marks inactive jobs stale, emails affected users a digest |
+| `followUpReminder` | Daily 9am      | Emails reminders for un-followed applied jobs (7+ days)   |
 
 ### Testing crons locally
 
@@ -99,12 +104,13 @@ Change the cron schedule in the source file to `*/1 * * * *` (every minute) and 
 ### Production (Render free tier)
 
 The server sleeps on Render's free tier — crons won't fire. Two options:
+
 1. **Upgrade to Starter plan ($7/mo)** — server stays alive, crons fire normally
 2. **Use an external trigger** — point [cron-job.org](https://cron-job.org) to hit:
-   ```
-   POST https://your-api.onrender.com/api/internal/run-stale-check
-   Header: x-internal-secret: <your INTERNAL_SECRET env var>
-   ```
+    ```
+    POST https://your-api.onrender.com/api/internal/run-stale-check
+    Header: x-internal-secret: <your INTERNAL_SECRET env var>
+    ```
 
 ---
 
@@ -157,20 +163,20 @@ applywise/
 
 ## API reference
 
-| Method | Route                              | Auth | Description                    |
-|--------|------------------------------------|------|--------------------------------|
-| POST   | `/api/auth/register`               | —    | Create account                 |
-| POST   | `/api/auth/login`                  | —    | Get tokens                     |
-| POST   | `/api/auth/refresh`                | —    | Rotate access token            |
-| POST   | `/api/auth/logout`                 | —    | Revoke refresh token           |
-| GET    | `/api/auth/me`                     | ✓    | Current user                   |
-| GET    | `/api/jobs`                        | ✓    | List with filters + pagination |
-| POST   | `/api/jobs`                        | ✓    | Create application             |
-| GET    | `/api/jobs/analytics`              | ✓    | Dashboard stats                |
-| GET    | `/api/jobs/:id`                    | ✓    | Single job detail              |
-| PUT    | `/api/jobs/:id`                    | ✓    | Update job                     |
-| DELETE | `/api/jobs/:id`                    | ✓    | Delete job                     |
-| POST   | `/api/internal/run-stale-check`    | 🔑   | Manual stale check trigger     |
+| Method | Route                           | Auth | Description                    |
+| ------ | ------------------------------- | ---- | ------------------------------ |
+| POST   | `/api/auth/register`            | —    | Create account                 |
+| POST   | `/api/auth/login`               | —    | Get tokens                     |
+| POST   | `/api/auth/refresh`             | —    | Rotate access token            |
+| POST   | `/api/auth/logout`              | —    | Revoke refresh token           |
+| GET    | `/api/auth/me`                  | ✓    | Current user                   |
+| GET    | `/api/jobs`                     | ✓    | List with filters + pagination |
+| POST   | `/api/jobs`                     | ✓    | Create application             |
+| GET    | `/api/jobs/analytics`           | ✓    | Dashboard stats                |
+| GET    | `/api/jobs/:id`                 | ✓    | Single job detail              |
+| PUT    | `/api/jobs/:id`                 | ✓    | Update job                     |
+| DELETE | `/api/jobs/:id`                 | ✓    | Delete job                     |
+| POST   | `/api/internal/run-stale-check` | 🔑   | Manual stale check trigger     |
 
 Query params for `GET /api/jobs`:
 `status`, `tags`, `startDate`, `endDate`, `search`, `sortBy`, `order`, `page`, `limit`

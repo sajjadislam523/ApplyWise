@@ -73,13 +73,13 @@ function FeatureCard({
         <motion.div
             {...fadeUp(delay)}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 backdrop-blur-sm
-                 hover:border-[#6EE7B7]/30 hover:bg-white/[0.06] transition-colors duration-300"
+            className="group relative rounded-2xl border border-white/[0.07] bg-white/3 p-6 backdrop-blur-xs
+                 hover:border-[#6EE7B7]/30 hover:bg-white/6 transition-colors duration-300"
         >
             {/* glow on hover */}
             <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                      bg-gradient-to-br from-[#6EE7B7]/5 to-transparent pointer-events-none"
+                      bg-linear-to-br from-[#6EE7B7]/5 to-transparent pointer-events-none"
             />
             <div
                 className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl
@@ -100,7 +100,7 @@ function Step({ n, title, desc }: { n: string; title: string; desc: string }) {
     return (
         <div className="flex gap-5">
             <div
-                className="flex-shrink-0 w-9 h-9 rounded-full border border-[#6EE7B7]/40
+                className="shrink-0 w-9 h-9 rounded-full border border-[#6EE7B7]/40
                       flex items-center justify-center font-display text-sm font-700 text-[#6EE7B7]"
             >
                 {n}
@@ -230,8 +230,8 @@ export default function LandingPage() {
                     <br />
                     <span className="relative inline-block">
                         <span
-                            className="relative z-10 bg-gradient-to-r from-[#6EE7B7] via-teal-300 to-[#6EE7B7]
-                             bg-[length:200%] animate-shimmer bg-clip-text text-transparent"
+                            className="relative z-10 bg-linear-to-r from-[#6EE7B7] via-teal-300 to-[#6EE7B7]
+                             bg-size-[200%] animate-shimmer bg-clip-text text-transparent"
                         >
                             an opportunity
                         </span>
@@ -266,9 +266,9 @@ export default function LandingPage() {
                     </Link>
                     <Link
                         href="/auth/login"
-                        className="px-7 py-3.5 rounded-xl border border-white/10 bg-white/[0.04]
+                        className="px-7 py-3.5 rounded-xl border border-white/10 bg-white/4
                        text-sm font-medium text-[#8B98A8] hover:text-white hover:border-white/20
-                       hover:bg-white/[0.07] transition-all duration-200 backdrop-blur-sm"
+                       hover:bg-white/[0.07] transition-all duration-200 backdrop-blur-xs"
                     >
                         Sign in to dashboard
                     </Link>
@@ -277,7 +277,7 @@ export default function LandingPage() {
                 {/* stat counters */}
                 <motion.div
                     {...fadeUp(0.45)}
-                    className="mt-20 grid grid-cols-3 gap-8 border-t border-white/[0.06] pt-12"
+                    className="mt-20 grid grid-cols-3 gap-8 border-t border-white/6 pt-12"
                 >
                     <StatCounter
                         value={500}
@@ -380,7 +380,7 @@ export default function LandingPage() {
                     {/* mock dashboard card */}
                     <motion.div
                         {...fadeUp(0.15)}
-                        className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 backdrop-blur-sm"
+                        className="rounded-2xl border border-white/8 bg-white/3 p-6 backdrop-blur-xs"
                     >
                         <div className="mb-4 flex items-center justify-between">
                             <span className="font-display text-sm font-600 text-white">
@@ -423,7 +423,7 @@ export default function LandingPage() {
                             <div
                                 key={i}
                                 className={`flex items-center justify-between py-3 border-b
-                border-white/[0.05] last:border-0 ${j.stale ? "opacity-40" : ""}`}
+                border-white/5 last:border-0 ${j.stale ? "opacity-40" : ""}`}
                             >
                                 <div>
                                     <p
@@ -454,7 +454,7 @@ export default function LandingPage() {
                 <motion.div
                     {...fadeUp(0)}
                     className="relative overflow-hidden rounded-3xl border border-[#6EE7B7]/20
-                     bg-gradient-to-br from-[#6EE7B7]/10 via-teal-900/10 to-indigo-900/20 p-12 text-center"
+                     bg-linear-to-br from-[#6EE7B7]/10 via-teal-900/10 to-indigo-900/20 p-12 text-center"
                 >
                     {/* inner glow */}
                     <div
@@ -481,7 +481,7 @@ export default function LandingPage() {
             </section>
 
             {/* ── Footer ────────────────────────────────────────────────────── */}
-            <footer className="relative z-10 border-t border-white/[0.06] px-6 py-8 md:px-12">
+            <footer className="relative z-10 border-t border-white/6 px-6 py-8 md:px-12">
                 <div className="mx-auto max-w-5xl flex items-center justify-between">
                     <span className="font-display text-sm font-600 text-white">
                         Apply<span className="text-[#6EE7B7]">wise</span>

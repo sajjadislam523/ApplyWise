@@ -22,8 +22,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref} id={selectId}
           className={cn(
             'h-9 w-full rounded-lg border bg-[#0F1419] px-3 text-sm text-white transition-colors',
-            'border-white/[0.08] hover:border-white/[0.15]',
-            'focus:border-[#6EE7B7]/50 focus:outline-none focus:ring-1 focus:ring-[#6EE7B7]/30',
+            'border-white/8 hover:border-white/15',
+            'focus:border-[#6EE7B7]/50 focus:outline-hidden focus:ring-1 focus:ring-[#6EE7B7]/30',
             error && 'border-red-700/50',
             props.disabled && 'opacity-50 cursor-not-allowed',
             className

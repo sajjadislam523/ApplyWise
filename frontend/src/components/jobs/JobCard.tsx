@@ -25,7 +25,7 @@ export function JobCard({ job }: { job: Job }) {
         'absolute top-0 left-0 right-0 h-px rounded-t-xl transition-opacity',
         job.isStale
           ? 'bg-neutral-700 opacity-50'
-          : 'bg-gradient-to-r from-transparent via-[#6EE7B7]/30 to-transparent opacity-0 group-hover:opacity-100'
+          : 'bg-linear-to-r from-transparent via-[#6EE7B7]/30 to-transparent opacity-0 group-hover:opacity-100'
       )} />
 
       {/* Header */}
@@ -53,7 +53,7 @@ export function JobCard({ job }: { job: Job }) {
         <div className="flex flex-wrap gap-1">
           {job.tags.map((tag) => (
             <span key={tag} className="px-2 py-0.5 rounded-md text-xs
-                                        bg-white/[0.05] text-[#8B98A8] border border-white/[0.06]">
+                                        bg-white/5 text-[#8B98A8] border border-white/6">
               {tag}
             </span>
           ))}
@@ -65,7 +65,7 @@ export function JobCard({ job }: { job: Job }) {
       )}
 
       {/* Actions */}
-      <div className="flex gap-2 pt-2 border-t border-white/[0.05]">
+      <div className="flex gap-2 pt-2 border-t border-white/5">
         <Button variant="ghost" size="sm" className="flex-1 text-xs" onClick={() => dispatch(openEditModal(job._id))}>
           Edit
         </Button>

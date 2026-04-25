@@ -16,9 +16,9 @@ export function DeleteConfirmModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-xs"
            onClick={() => dispatch(closeDeleteConfirm())} />
-      <div className="relative rounded-2xl border border-white/[0.1] bg-[#0F1419] shadow-2xl
+      <div className="relative rounded-2xl border border-white/10 bg-[#0F1419] shadow-2xl
                       w-full max-w-sm mx-4 p-6">
         <h2 className="font-display font-600 text-base text-white mb-2">Delete application?</h2>
         <p className="text-sm text-[#8B98A8] mb-6">This cannot be undone.</p>

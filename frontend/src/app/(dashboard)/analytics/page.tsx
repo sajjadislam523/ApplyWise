@@ -61,10 +61,10 @@ export default function AnalyticsPage() {
 
   if (isLoading) return (
     <div className="max-w-5xl mx-auto space-y-8 animate-pulse">
-      <div className="h-8 w-32 bg-white/[0.05] rounded" />
+      <div className="h-8 w-32 bg-white/5 rounded-sm" />
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-24 bg-white/[0.03] border border-white/[0.06] rounded-xl" />
+          <div key={i} className="h-24 bg-white/3 border border-white/6 rounded-xl" />
         ))}
       </div>
     </div>
@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
                 return (
                   <div key={tag.name} className="flex items-center gap-3">
                     <span className="text-xs text-[#8B98A8] w-24 truncate">{tag.name}</span>
-                    <div className="flex-1 h-1 bg-white/[0.05] rounded-full overflow-hidden">
+                    <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
                       <div className="h-full bg-[#6EE7B7] rounded-full transition-all duration-500"
                            style={{ width: `${pct}%` }} />
                     </div>

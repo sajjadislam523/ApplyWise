@@ -47,7 +47,7 @@ export default function DashboardPage() {
       {isLoading ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-24 rounded-xl bg-white/[0.03] border border-white/[0.06] animate-pulse" />
+            <div key={i} className="h-24 rounded-xl bg-white/3 border border-white/6 animate-pulse" />
           ))}
         </div>
       ) : data ? (
@@ -68,7 +68,7 @@ export default function DashboardPage() {
               return (
                 <div key={status} className="flex items-center gap-3">
                   <span className="text-xs text-[#8B98A8] w-24 capitalize">{status}</span>
-                  <div className="flex-1 h-1 bg-white/[0.05] rounded-full overflow-hidden">
+                  <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
                     <div className="h-full bg-[#6EE7B7] rounded-full transition-all duration-700"
                          style={{ width: `${pct}%` }} />
                   </div>

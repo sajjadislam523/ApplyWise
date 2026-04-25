@@ -14,8 +14,8 @@ export function Sidebar() {
     const pathname = usePathname();
 
     return (
-        <aside className="w-56 shrink-0 border-r border-white/[0.06] bg-[#0F1419] flex flex-col">
-            <div className="h-14 flex items-center px-5 border-b border-white/[0.05]">
+        <aside className="w-56 shrink-0 border-r border-white/6 bg-[#0F1419] flex flex-col">
+            <div className="h-14 flex items-center px-5 border-b border-white/5">
                 <Link href="/">
                     <span className="font-display text-base font-700 tracking-tight text-white">
                         Apply<span className="text-[#6EE7B7]">wise</span>
@@ -35,7 +35,7 @@ export function Sidebar() {
                                 "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-150",
                                 active
                                     ? "bg-[#6EE7B7]/10 text-[#6EE7B7] border border-[#6EE7B7]/20"
-                                    : "text-[#8B98A8] hover:bg-white/[0.04] hover:text-white border border-transparent",
+                                    : "text-[#8B98A8] hover:bg-white/4 hover:text-white border border-transparent",
                             )}
                         >
                             <span className="text-base leading-none">
@@ -47,7 +47,7 @@ export function Sidebar() {
                 })}
             </nav>
 
-            <div className="px-5 py-4 border-t border-white/[0.05]">
+            <div className="px-5 py-4 border-t border-white/5">
                 <p className="text-xs text-[#4A5568]">
                     Auto-expires inactive leads
                 </p>

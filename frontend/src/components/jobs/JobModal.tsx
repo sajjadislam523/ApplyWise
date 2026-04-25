@@ -24,9 +24,9 @@ export function JobModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-xs"
            onClick={() => dispatch(closeJobModal())} />
-      <div className="relative rounded-2xl border border-white/[0.1] bg-[#0F1419] shadow-2xl
+      <div className="relative rounded-2xl border border-white/10 bg-[#0F1419] shadow-2xl
                       w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-4">
         <div className="sticky top-0 bg-[#0F1419] border-b border-white/[0.07] px-6 py-4
                         flex items-center justify-between z-10">

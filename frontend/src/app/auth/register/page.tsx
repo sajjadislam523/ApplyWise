@@ -33,7 +33,7 @@ export default function RegisterPage() {
           <p className="mt-2 text-sm text-[#8B98A8]">Create your free account</p>
         </div>
 
-        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 backdrop-blur-sm">
+        <div className="rounded-2xl border border-white/8 bg-white/3 p-8 backdrop-blur-xs">
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input label="Name" type="text" placeholder="Your name"
               value={name} onChange={(e) => setName(e.target.value)} required autoFocus />

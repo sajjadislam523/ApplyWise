@@ -71,7 +71,7 @@ export function JobForm({ editingId }: { editingId: string | null }) {
   const apiError = ((createError || updateError) as { response?: { data?: { message?: string } } })
     ?.response?.data?.message;
 
-  const fieldClass = "h-9 w-full rounded-lg border bg-white/[0.04] px-3 text-sm text-white placeholder:text-[#4A5568] border-white/[0.08] focus:border-[#6EE7B7]/50 focus:outline-none focus:ring-1 focus:ring-[#6EE7B7]/30 transition-colors";
+  const fieldClass = "h-9 w-full rounded-lg border bg-white/4 px-3 text-sm text-white placeholder:text-[#4A5568] border-white/8 focus:border-[#6EE7B7]/50 focus:outline-hidden focus:ring-1 focus:ring-[#6EE7B7]/30 transition-colors";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -115,7 +115,7 @@ export function JobForm({ editingId }: { editingId: string | null }) {
           <div className="flex flex-wrap gap-1 mt-1">
             {form.tags.map((t) => (
               <span key={t} className="flex items-center gap-1 px-2 py-0.5 rounded-md text-xs
-                                        bg-white/[0.05] text-[#8B98A8] border border-white/[0.06]">
+                                        bg-white/5 text-[#8B98A8] border border-white/6">
                 {t}
                 <button type="button" onClick={() => set('tags', form.tags.filter((x) => x !== t))}
                   className="text-[#4A5568] hover:text-white">×</button>
@@ -126,11 +126,11 @@ export function JobForm({ editingId }: { editingId: string | null }) {
       </div>
 
       {/* Follow-up + Timeout */}
-      <div className="flex items-center gap-4 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+      <div className="flex items-center gap-4 p-3 rounded-lg border border-white/6 bg-white/2">
         <label className="flex items-center gap-2 text-sm text-[#8B98A8] cursor-pointer">
           <input type="checkbox" checked={form.followUpSent}
             onChange={(e) => set('followUpSent', e.target.checked)}
-            className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#6EE7B7]" />
+            className="w-4 h-4 rounded-sm border-white/20 bg-white/5 accent-[#6EE7B7]" />
           Follow-up sent
         </label>
         {form.followUpSent && (
@@ -142,7 +142,7 @@ export function JobForm({ editingId }: { editingId: string | null }) {
           <label className="text-[#8B98A8]">Timeout</label>
           <input type="number" min={1} max={365} value={form.timeoutDays}
             onChange={(e) => set('timeoutDays', parseInt(e.target.value, 10))}
-            className="w-16 h-8 text-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-sm text-white focus:outline-none focus:border-[#6EE7B7]/50" />
+            className="w-16 h-8 text-center rounded-lg border border-white/8 bg-white/4 text-sm text-white focus:outline-hidden focus:border-[#6EE7B7]/50" />
           <span className="text-[#4A5568] text-xs">days</span>
         </div>
       </div>
@@ -153,7 +153,7 @@ export function JobForm({ editingId }: { editingId: string | null }) {
         </p>
       )}
 
-      <div className="flex gap-3 pt-2 border-t border-white/[0.06]">
+      <div className="flex gap-3 pt-2 border-t border-white/6">
         <Button type="button" variant="secondary" className="flex-1"
           onClick={() => dispatch(closeJobModal())}>Cancel</Button>
         <Button type="submit" className="flex-1" loading={isPending}>

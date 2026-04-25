@@ -10,7 +10,7 @@ export function Navbar() {
 
     return (
         <header
-            className="h-14 border-b border-white/[0.06] bg-[#0F1419] flex items-center
+            className="h-14 border-b border-white/6 bg-[#0F1419] flex items-center
                         justify-between px-6 shrink-0"
         >
             <div />

@@ -1,0 +1,47 @@
+services:
+    # ─── Express API ───────────────────────────────────────────────────────────
+    - type: web
+      name: applywise-api
+      runtime: node
+      region: oregon
+      plan: starter # $7/mo — keeps the server alive so cron fires reliably
+      rootDir: backend
+      buildCommand: npm install && npm run build
+      startCommand: npm start
+      healthCheckPath: /health
+      envVars:
+          - key: NODE_ENV
+            value: production
+          - key: PORT
+            value: 5000
+          # Set these in the Render dashboard — never commit real values
+          - key: MONGODB_URI
+            sync: false
+          - key: JWT_SECRET
+            sync: false
+          - key: JWT_REFRESH_SECRET
+            sync: false
+          - key: JWT_EXPIRES_IN
+            value: 15m
+          - key: JWT_REFRESH_EXPIRES_IN
+            value: 7d
+          - key: CLIENT_URL
+            sync: false # your Vercel URL e.g. https://applywise.vercel.app
+          - key: SMTP_HOST
+            sync: false
+          - key: SMTP_PORT
+            value: 587
+          - key: SMTP_USER
+            sync: false
+          - key: SMTP_PASS
+            sync: false
+          - key: EMAIL_FROM
+            sync: false
+          - key: INTERNAL_SECRET
+            sync: false # random string for the manual stale-check endpoint
+
+
+    # ─── Optional: external cron to trigger stale check on free tier ───────────
+    # If you're on Render's free tier and the server sleeps, use cron-job.org to
+    # POST https://your-api.onrender.com/api/internal/run-stale-check every day
+    # with header: x-internal-secret: <your INTERNAL_SECRET>

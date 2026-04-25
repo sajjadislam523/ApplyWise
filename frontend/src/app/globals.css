@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens ──────────────────────────────────────────────────────── */
+:root {
+  --bg-base:       #080C10;
+  --bg-surface:    #0F1419;
+  --bg-elevated:   #161C24;
+  --border-subtle: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.14);
+  --accent:        #6EE7B7;
+  --accent-dim:    rgba(110,231,183,0.12);
+  --text-primary:  #F1F5F9;
+  --text-secondary:#8B98A8;
+  --text-muted:    #4A5568;
+  --red-soft:      #F87171;
+  --amber-soft:    #FCD34D;
+  --green-soft:    #6EE7B7;
+}
+
+/* ── Base reset ─────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Status badges ──────────────────────────────────────────────────────── */
+@layer utilities {
+  .status-applied      { @apply bg-blue-950 text-blue-300 border-blue-800; }
+  .status-interviewing { @apply bg-amber-950 text-amber-300 border-amber-800; }
+  .status-offer        { @apply bg-emerald-950 text-emerald-300 border-emerald-800; }
+  .status-rejected     { @apply bg-red-950 text-red-400 border-red-900; }
+  .status-stale        { @apply bg-neutral-900 text-neutral-500 border-neutral-800; }
+  .card-stale          { @apply opacity-50; }
+  .card-stale .job-title { @apply line-through text-neutral-500; }
+}
+
+/* ── Animated orb background ────────────────────────────────────────────── */
+@keyframes orb-drift-1 {
+  0%,100% { transform: translate(0,0) scale(1);   }
+  33%     { transform: translate(60px,-40px) scale(1.08); }
+  66%     { transform: translate(-30px,50px) scale(0.95); }
+}
+@keyframes orb-drift-2 {
+  0%,100% { transform: translate(0,0) scale(1);   }
+  40%     { transform: translate(-80px,60px) scale(1.1); }
+  75%     { transform: translate(50px,-30px) scale(0.92); }
+}
+@keyframes orb-drift-3 {
+  0%,100% { transform: translate(0,0) scale(1);   }
+  50%     { transform: translate(40px,80px) scale(1.05); }
+}
+@keyframes grid-fade {
+  0%,100% { opacity: 0.03; }
+  50%     { opacity: 0.06; }
+}
+@keyframes float-up {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.orb-1 { animation: orb-drift-1 18s ease-in-out infinite; }
+.orb-2 { animation: orb-drift-2 22s ease-in-out infinite; }
+.orb-3 { animation: orb-drift-3 26s ease-in-out infinite; }
+
+.animate-float-up  { animation: float-up 0.7s ease forwards; }
+.animate-shimmer   {
+  background: linear-gradient(90deg, transparent 0%, rgba(110,231,183,0.15) 50%, transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 2.5s linear infinite;
+}

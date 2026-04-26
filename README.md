@@ -269,11 +269,11 @@ curl http://localhost:5000/health
 | `MONGODB_URI`            | ✅       | MongoDB Atlas connection string. Format: `mongodb+srv://<user>:<pass>@cluster.mongodb.net/applywise`       |
 | `JWT_SECRET`             | ✅       | Secret for signing access tokens. Generate: `openssl rand -base64 64`                                      |
 | `JWT_REFRESH_SECRET`     | ✅       | Separate secret for refresh tokens. Must differ from `JWT_SECRET`                                          |
-| `JWT_EXPIRES_IN`         | ❌       | Access token TTL. Default: `15m`                                                                           |
-| `JWT_REFRESH_EXPIRES_IN` | ❌       | Refresh token TTL. Default: `7d`                                                                           |
+| `JWT_EXPIRES_IN`         | ✅       | Access token TTL. Default: `15m`                                                                           |
+| `JWT_REFRESH_EXPIRES_IN` | ✅       | Refresh token TTL. Default: `7d`                                                                           |
 | `CLIENT_URL`             | ✅       | Frontend origin for CORS. Local: `http://localhost:3000`. Production: `https://apply-wise-jade.vercel.app` |
-| `PORT`                   | ❌       | Server port. Default: `5000`                                                                               |
-| `NODE_ENV`               | ❌       | `development` or `production`                                                                              |
+| `PORT`                   | ✅       | Server port. Default: `5000`                                                                               |
+| `NODE_ENV`               | ✅       | `development` or `production`                                                                              |
 | `INTERNAL_SECRET`        | ❌       | Secret header for the manual stale-check endpoint                                                          |
 | `SMTP_HOST`              | ❌       | SMTP server. Example: `smtp.gmail.com`                                                                     |
 | `SMTP_PORT`              | ❌       | SMTP port. `587` for TLS, `465` for SSL                                                                    |

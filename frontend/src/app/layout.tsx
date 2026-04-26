@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     title: "Applywise — Job Application Tracker",
     description:
         "Track every application, auto-detect stale leads, and analyse your job search.",
+    icons: {
+        icon: "./icon.svg",
+    },
 };
 
 export default function RootLayout({

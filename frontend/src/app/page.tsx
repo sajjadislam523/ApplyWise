@@ -131,23 +131,23 @@ export default function LandingPage() {
             <div className="pointer-events-none fixed inset-0 overflow-hidden">
                 {/* orb 1 — emerald top-right */}
                 <div
-                    className="orb-1 absolute -top-32 -right-32 h-[600px] w-[600px] rounded-full
+                    className="orb-1 absolute -top-32 -right-32 h-150 w-150 rounded-full
                         bg-[#6EE7B7] opacity-[0.07] blur-[120px]"
                 />
                 {/* orb 2 — indigo bottom-left */}
                 <div
-                    className="orb-2 absolute -bottom-48 -left-48 h-[700px] w-[700px] rounded-full
+                    className="orb-2 absolute -bottom-48 -left-48 h-175 w-175 rounded-full
                         bg-indigo-500 opacity-[0.06] blur-[140px]"
                 />
                 {/* orb 3 — teal center */}
                 <div
                     className="orb-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                        h-[500px] w-[500px] rounded-full bg-teal-600 opacity-[0.04] blur-[100px]"
+                        h-125 w-125 rounded-full bg-teal-600 opacity-[0.04] blur-[100px]"
                 />
 
                 {/* dot grid */}
                 <svg
-                    className="absolute inset-0 h-full w-full opacity-[0.04]"
+                    className="absolute inset-0 h-full w-full opacity-[0.06]"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <defs>

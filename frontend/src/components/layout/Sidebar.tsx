@@ -4,11 +4,14 @@ import HamburgerIcon from "@/components/ui/HamburgerIcon";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { IoMdBriefcase } from "react-icons/io";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const nav = [
-    { href: "/dashboard", label: "Dashboard", icon: "▦" },
-    { href: "/jobs", label: "Applications", icon: "⊞" },
-    { href: "/analytics", label: "Analytics", icon: "↗" },
+    { href: "/dashboard", label: "Dashboard", icon: <MdOutlineDashboard /> },
+    { href: "/jobs", label: "Applications", icon: <IoMdBriefcase /> },
+    { href: "/analytics", label: "Analytics", icon: <IoAnalyticsOutline /> },
 ];
 
 export function Sidebar({

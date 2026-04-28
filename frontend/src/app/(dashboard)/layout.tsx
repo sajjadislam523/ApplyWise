@@ -20,10 +20,6 @@ export default function DashboardLayout({
         if (isInitialised && !user) router.replace("/auth/login");
     }, [user, isInitialised, router]);
 
-    // useEffect(() => {
-    //     setIsSidebarOpen(false);
-    // }, []);
-
     if (!isInitialised) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-[#080C10]">

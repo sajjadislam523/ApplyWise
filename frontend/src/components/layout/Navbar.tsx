@@ -21,9 +21,13 @@ export function Navbar({
                         justify-between px-6 shrink-0"
         >
             <div className="flex items-center">
-                <button onClick={onMenuClick} className="md:hidden mr-4">
+                <Button
+                    variant="ghost"
+                    onClick={onMenuClick}
+                    className="md:hidden mr-4"
+                >
                     <HamburgerIcon isOpen={isOpen} />
-                </button>
+                </Button>
             </div>
             <div className="flex items-center gap-4">
                 <span className="text-sm text-[#8B98A8]">{user?.name}</span>

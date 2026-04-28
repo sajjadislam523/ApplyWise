@@ -4,6 +4,7 @@ import { useAppSelector } from "@/store";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { MdOutlineDashboard } from "react-icons/md";
 
 /* ── animation helpers ─────────────────────────────────────────────────── */
 const fadeUp = (delay = 0) => ({
@@ -182,9 +183,11 @@ export default function LandingPage() {
                         <Link
                             href="/dashboard"
                             className="px-4 py-2 rounded-lg bg-[#6EE7B7] text-[#080C10] text-sm font-600
-                       hover:bg-[#5BCFAA] transition-colors font-display font-semibold"
+                       hover:bg-[#5BCFAA] transition-colors font-display font-semibold flex items-center gap-1"
                         >
-                            Dashboard
+                            <MdOutlineDashboard className="text-base" />
+
+                            <span className="hidden md:inline">Dashboard</span>
                         </Link>
                     </div>
                 ) : (

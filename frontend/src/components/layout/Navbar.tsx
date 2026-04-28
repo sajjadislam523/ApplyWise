@@ -1,10 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import HamburgerIcon from "@/components/ui/HamburgerIcon";
 import { useLogout } from "@/hooks/useAuth";
 import { useAppSelector } from "@/store";
 
-export function Navbar() {
+export function Navbar({
+    onMenuClick,
+    isOpen,
+}: {
+    onMenuClick: () => void;
+    isOpen: boolean;
+}) {
     const user = useAppSelector((s) => s.auth.user);
     const { mutate: logout, isPending } = useLogout();
 
@@ -13,7 +20,11 @@ export function Navbar() {
             className="h-14 border-b border-white/6 bg-[#0F1419] flex items-center
                         justify-between px-6 shrink-0"
         >
-            <div />
+            <div className="flex items-center">
+                <button onClick={onMenuClick} className="md:hidden mr-4">
+                    <HamburgerIcon isOpen={isOpen} />
+                </button>
+            </div>
             <div className="flex items-center gap-4">
                 <span className="text-sm text-[#8B98A8]">{user?.name}</span>
                 <Button

@@ -65,11 +65,12 @@ in `frontend/src/app/globals.css` (`shimmer`, three orb drifts, `grid-fade`) plu
 decorative loops to stop under reduced motion. `scroll-behavior: smooth` on
 `<html>` should be guarded at the same time.
 
-### No inline form validation
+### No inline form validation in JobForm
 
-`Input` already accepts an `error` prop and renders it with the right
-`aria-invalid` / `aria-describedby` wiring, but `JobForm` never passes it — every
-failure surfaces as a single API-level banner instead. Wire per-field errors
+`Input` accepts an `error` prop and renders it with the right `aria-invalid` /
+`aria-describedby` wiring. The reset-password form uses it for both the length
+and confirmation checks, but `JobForm` still never passes it — every failure
+there surfaces as a single API-level banner instead. Wire per-field errors
 through the existing prop and focus the first invalid field on submit.
 
 ### No unsaved-changes guard

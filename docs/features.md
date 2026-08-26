@@ -88,13 +88,34 @@ Registration and login are rate limited to 10 requests per 15 minutes per IP.
 *Implemented in:* `backend/src/controllers/auth.controller.ts`,
 `backend/src/middleware/auth.middleware.ts`, `frontend/src/lib/axios.ts`
 
+## Password reset
+
+Request a link from the sign-in page, receive an email, choose a new password.
+
+The token is 32 random bytes; only its SHA-256 hash is stored, so the raw value
+exists solely in the email. Links last 60 minutes, work once, and are superseded
+the moment a newer one is requested. Completing a reset also clears the stored
+refresh token, ending every other session.
+
+`forgot-password` always answers identically whether or not the address has an
+account, so the endpoint cannot be used to discover who is registered.
+
+If SMTP is unconfigured the request still succeeds — the email simply never
+arrives, matching how every other send in the app behaves.
+
+*Implemented in:* `backend/src/controllers/auth.controller.ts`
+(`forgotPassword`, `resetPassword`), `backend/src/utils/email.ts`,
+`frontend/src/app/auth/forgot-password/page.tsx`,
+`frontend/src/app/auth/reset-password/page.tsx`
+
 ## Email notifications
 
-Three transactional emails, all sent through Nodemailer:
+Four transactional emails, all sent through Nodemailer:
 
 | Email | Trigger |
 | --- | --- |
 | Welcome | First registration |
+| Password reset | A reset link is requested |
 | Stale digest | Stale checker run, one per affected user |
 | Follow-up reminder | Follow-up cron, one per qualifying job |
 

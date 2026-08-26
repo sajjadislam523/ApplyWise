@@ -20,6 +20,23 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 });
 
 // ─── Response interceptor: silent refresh on 401 ─────────────────────────
+
+// These endpoints authenticate by credentials, not by an access token, so a
+// 401 from them means "wrong credentials" — not "expired token". Running the
+// refresh flow for those would call /auth/refresh with no token, fail, reject
+// with that failure instead of the real error, and hard-redirect the page
+// before the form could render the message.
+const CREDENTIAL_PATHS = [
+  '/auth/login',
+  '/auth/register',
+  '/auth/refresh',
+  '/auth/forgot-password',
+  '/auth/reset-password',
+];
+
+const isCredentialRequest = (url?: string): boolean =>
+  !!url && CREDENTIAL_PATHS.some((path) => url.split('?')[0].endsWith(path));
+
 let isRefreshing = false;
 let failedQueue: Array<{
   resolve: (value: string) => void;
@@ -36,7 +53,11 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    if (
+      error.response?.status !== 401 ||
+      originalRequest._retry ||
+      isCredentialRequest(originalRequest.url)
+    ) {
       return Promise.reject(error);
     }
 

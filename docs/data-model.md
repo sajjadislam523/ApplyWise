@@ -15,6 +15,8 @@ The two collections, their indexes, and the hooks that write to them.
 | `email` | String | Required, unique, lowercased, trimmed |
 | `password` | String | Required, min 8, `select: false` |
 | `refreshToken` | String | `select: false` |
+| `passwordResetToken` | String | SHA-256 of the emailed token, `select: false` |
+| `passwordResetExpires` | Date | `select: false` |
 | `createdAt` / `updatedAt` | Date | Mongoose timestamps |
 
 **Index:** `{ email: 1 }` unique.
@@ -32,6 +34,12 @@ not double-hash it. `comparePassword()` on the document wraps `bcrypt.compare`.
 Because the refresh token is stored here as a single value, only one session per
 user can be valid at a time. See
 [architecture.md](architecture.md#one-refresh-token-per-user).
+
+`passwordResetToken` stores the SHA-256 **hash** of the token that was emailed,
+never the token itself, so a database leak cannot be turned into a password
+reset. The raw token exists only in the email. Both reset fields are cleared
+once used, and a successful reset also clears `refreshToken` — whoever requested
+the reset may not be whoever was signed in, so every existing session ends.
 
 ---
 

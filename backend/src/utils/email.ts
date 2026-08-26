@@ -97,6 +97,28 @@ export const sendWelcomeEmail = async (to: string, name: string): Promise<void> 
   });
 };
 
+// ─── Password reset ────────────────────────────────────────────────────────
+export const sendPasswordResetEmail = async (
+  to:       string,
+  name:     string,
+  resetUrl: string,
+  expiryMinutes: number
+): Promise<void> => {
+  await sendMail({
+    to,
+    subject: 'Reset your Applywise password',
+    html: baseTemplate('Reset your password', `
+      <h1>Reset your password</h1>
+      <p>Hi ${name}, we received a request to reset your Applywise password.
+         This link expires in ${expiryMinutes} minutes and can be used once.</p>
+      <a class="cta" href="${resetUrl}">Choose a new password →</a>
+      <p style="margin-top:24px">If you didn't ask for this, you can ignore this
+         email — your password will not change, and nobody can use this link
+         without access to your inbox.</p>
+    `),
+  });
+};
+
 // ─── Stale job digest ──────────────────────────────────────────────────────
 export interface StaleJobSummary {
   title:   string;

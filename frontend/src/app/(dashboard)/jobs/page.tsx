@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useJobs } from '@/hooks/useJobs';
-import { useAppDispatch } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { openCreateModal } from '@/store/uiSlice';
 import { JobCard } from '@/components/jobs/JobCard';
 import { JobFilters } from '@/components/jobs/JobFilters';
@@ -13,7 +13,12 @@ import { Button } from '@/components/ui/Button';
 export default function JobsPage() {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
+  const filters = useAppSelector((s) => s.filters);
   const { data, isLoading, isError } = useJobs(page);
+
+  // Narrowing the filters while on a later page would otherwise request a page
+  // that no longer exists and render an empty list.
+  useEffect(() => { setPage(1); }, [filters]);
 
   return (
     <>
@@ -27,6 +32,14 @@ export default function JobsPage() {
         </div>
 
         <JobFilters />
+
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          {isLoading
+            ? 'Loading applications…'
+            : data
+              ? `${data.meta.total} applications found`
+              : ''}
+        </div>
 
         {isLoading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

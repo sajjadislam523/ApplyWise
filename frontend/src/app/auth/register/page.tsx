@@ -22,7 +22,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#080C10] px-4">
-      <div className="pointer-events-none fixed bottom-0 left-0 h-[500px] w-[500px] rounded-full
+      <div className="pointer-events-none fixed bottom-0 left-0 h-125 w-125 rounded-full
                       bg-indigo-500 opacity-[0.05] blur-[120px]" />
 
       <div className="relative z-10 w-full max-w-sm">
@@ -35,15 +35,17 @@ export default function RegisterPage() {
 
         <div className="rounded-2xl border border-white/8 bg-white/3 p-8 backdrop-blur-xs">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Input label="Name" type="text" placeholder="Your name"
+            <Input label="Name" type="text" name="name" autoComplete="name" placeholder="Your name"
               value={name} onChange={(e) => setName(e.target.value)} required autoFocus />
-            <Input label="Email" type="email" placeholder="you@example.com"
+            <Input label="Email" type="email" name="email" autoComplete="email" inputMode="email"
+              spellCheck={false} placeholder="you@example.com"
               value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <Input label="Password" type="password" placeholder="Min 8 characters"
+            <Input label="Password" type="password" name="password" autoComplete="new-password"
+              spellCheck={false} placeholder="Min 8 characters"
               value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
 
             {apiError && (
-              <p className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2">
+              <p role="alert" className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2">
                 {apiError}
               </p>
             )}

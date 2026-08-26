@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
                   <div key={tag.name} className="flex items-center gap-3">
                     <span className="text-xs text-[#8B98A8] w-24 truncate">{tag.name}</span>
                     <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#6EE7B7] rounded-full transition-all duration-500"
+                      <div className="h-full bg-[#6EE7B7] rounded-full transition-[width] duration-500"
                            style={{ width: `${pct}%` }} />
                     </div>
                     <span className="text-xs tabular-nums text-[#4A5568] w-5 text-right">{tag.count}</span>

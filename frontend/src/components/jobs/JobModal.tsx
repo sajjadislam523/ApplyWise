@@ -26,16 +26,20 @@ export function JobModal() {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-xs"
            onClick={() => dispatch(closeJobModal())} />
-      <div className="relative rounded-2xl border border-white/10 bg-[#0F1419] shadow-2xl
-                      w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-4">
+      <div role="dialog" aria-modal="true" aria-labelledby="job-modal-title"
+           className="relative rounded-2xl border border-white/10 bg-[#0F1419] shadow-2xl
+                      w-full max-w-2xl max-h-[90vh] overflow-y-auto overscroll-contain mx-4">
         <div className="sticky top-0 bg-[#0F1419] border-b border-white/[0.07] px-6 py-4
                         flex items-center justify-between z-10">
-          <h2 className="font-display font-600 text-base text-white">
+          <h2 id="job-modal-title" className="font-display font-600 text-base text-white">
             {editingJobId ? 'Edit application' : 'New application'}
           </h2>
-          <button onClick={() => dispatch(closeJobModal())}
-            className="text-[#4A5568] hover:text-white text-lg leading-none transition-colors">
-            ✕
+          <button type="button" onClick={() => dispatch(closeJobModal())}
+            aria-label="Close dialog"
+            className="p-2 -mr-2 rounded-lg text-[#4A5568] hover:text-white text-lg leading-none
+                       transition-colors touch-manipulation
+                       focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30">
+            <span aria-hidden="true">✕</span>
           </button>
         </div>
         <div className="p-6">

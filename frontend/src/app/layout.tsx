@@ -1,5 +1,5 @@
 import { Providers } from "@/providers/Providers";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Syne } from "next/font/google";
 import "./globals.css";
 
@@ -22,6 +22,11 @@ export const metadata: Metadata = {
     icons: {
         icon: "./icon.svg",
     },
+};
+
+export const viewport: Viewport = {
+    themeColor: "#080C10",
+    colorScheme: "dark",
 };
 
 export default function RootLayout({

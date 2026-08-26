@@ -15,7 +15,10 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
-.env.example
+
+# .env.example files ARE committed — they document the required keys with
+# placeholder values and hold no secrets. See docs/development.md.
+!.env.example
 
 
 # Logs

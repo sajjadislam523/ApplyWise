@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useAnalytics } from '@/hooks/useJobs';
 import { useAppSelector } from '@/store';
 
@@ -35,13 +36,18 @@ export default function DashboardPage() {
   const user = useAppSelector((s) => s.auth.user);
   const { data, isLoading } = useAnalytics();
 
+  // getHours() resolves against the server's timezone during SSR and the
+  // viewer's on the client, so computing it in render mismatches on hydration.
+  const [greeting, setGreeting] = useState('Welcome back');
+  useEffect(() => { setGreeting(getGreeting()); }, []);
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <h1 className="font-display text-xl font-700 text-white">
-          {getGreeting()}, {user?.name?.split(' ')[0]}
+          {greeting}, {user?.name?.split(' ')[0]}
         </h1>
-        <p className="text-sm text-[#8B98A8] mt-0.5">Here's where your job search stands.</p>
+        <p className="text-sm text-[#8B98A8] mt-0.5">Here&rsquo;s where your job search stands.</p>
       </div>
 
       {isLoading ? (
@@ -69,7 +75,7 @@ export default function DashboardPage() {
                 <div key={status} className="flex items-center gap-3">
                   <span className="text-xs text-[#8B98A8] w-24 capitalize">{status}</span>
                   <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#6EE7B7] rounded-full transition-all duration-700"
+                    <div className="h-full bg-[#6EE7B7] rounded-full transition-[width] duration-700"
                          style={{ width: `${pct}%` }} />
                   </div>
                   <span className="text-xs tabular-nums text-[#4A5568] w-8 text-right">{count}</span>

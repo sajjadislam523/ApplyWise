@@ -45,6 +45,10 @@ export default function LoginPage() {
                         <Input
                             label="Email"
                             type="email"
+                            name="email"
+                            autoComplete="email"
+                            inputMode="email"
+                            spellCheck={false}
                             placeholder="you@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -54,6 +58,9 @@ export default function LoginPage() {
                         <Input
                             label="Password"
                             type="password"
+                            name="password"
+                            autoComplete="current-password"
+                            spellCheck={false}
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -61,7 +68,7 @@ export default function LoginPage() {
                         />
 
                         {apiError && (
-                            <p className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2">
+                            <p role="alert" className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2">
                                 {apiError}
                             </p>
                         )}

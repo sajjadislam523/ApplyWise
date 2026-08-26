@@ -1,0 +1,17 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json",
+
+    "//": "Docs lint config. See docs/README.md for the documentation system.",
+
+    "MD013": false,
+    "//MD013": "No line-length cap — prose is soft-wrapped and diffs stay readable.",
+
+    "MD024": { "siblings_only": true },
+    "//MD024": "CHANGELOG.md repeats Added/Fixed/Changed under each version by design.",
+
+    "MD033": { "allowed_elements": ["br", "img", "details", "summary"] },
+    "//MD033": "Inline HTML only where Markdown has no equivalent.",
+
+    "MD041": false,
+    "//MD041": "Front matter and badge blocks may precede the first heading."
+}

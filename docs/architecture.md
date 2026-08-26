@@ -88,6 +88,15 @@ its signature is still valid.
 **Always call the API through this instance.** Bypassing it loses both token
 injection and the refresh handling.
 
+**The refresh path skips credential endpoints.** `/auth/login`, `/auth/register`,
+`/auth/refresh`, `/auth/forgot-password` and `/auth/reset-password` authenticate
+by credentials rather than an access token, so a 401 from them means "wrong
+credentials", not "expired token". Without that carve-out a failed login fired
+the refresh flow, which called `/auth/refresh` with no token, failed, rejected
+with *that* error instead of the real one, and hard-redirected the page before
+the form could show a message — so a wrong password just blanked the login form.
+Any new unauthenticated endpoint must be added to `CREDENTIAL_PATHS`.
+
 Auth state is mirrored to `localStorage` under `applywise_access`,
 `applywise_refresh`, and `applywise_user`, and restored by the `rehydrate` action
 dispatched from `frontend/src/providers/Providers.tsx`.

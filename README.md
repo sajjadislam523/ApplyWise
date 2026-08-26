@@ -30,6 +30,7 @@ flagged as stale and you get an email about it.
   a reply, and application volume over time.
 - **Filter and search** — by status, tags, and date range, or across title and
   company.
+- **Reset a forgotten password** — emailed single-use link, valid for an hour.
 
 Details, and the files behind each, in [docs/features.md](docs/features.md).
 

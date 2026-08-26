@@ -100,6 +100,43 @@ the user returns `401 Refresh token revoked`.
 Clears the stored refresh token. Always `200`, including for a token that was
 already invalid.
 
+### `POST /api/auth/forgot-password`
+
+Rate limited to 5 requests per hour **per IP** — not per email address, since
+each request sends mail. A shared IP therefore shares the budget.
+
+```json
+{ "email": "you@example.com" }
+```
+
+Always `200`, with the same body whether or not an account exists:
+
+```json
+{ "success": true, "data": null, "message": "If an account exists for that email, a reset link is on its way." }
+```
+
+Varying the response would turn this into a way to discover which addresses have
+accounts. When the address does exist, a single-use token is generated, its
+SHA-256 hash stored on the user with a 60-minute expiry, and a link emailed.
+Requesting a new link immediately invalidates any previous one.
+
+### `POST /api/auth/reset-password`
+
+Rate limited to 10 requests per 15 minutes per IP — deliberately looser than
+`forgot-password`, because this sends no mail and a user fumbling the password
+rules should not be locked out while holding a valid link.
+
+```json
+{ "token": "<the token from the emailed link>", "password": "atleast8chars" }
+```
+
+`200` on success. `400` if the token is unknown, already used, or expired — all
+three return the same message, `"This reset link is invalid or has expired"`.
+`400` if the password is under 8 characters.
+
+Resetting also clears the stored `refreshToken`, so every existing session ends
+and the user must sign in again everywhere.
+
 ### `GET /api/auth/me` 🔒
 
 ```json

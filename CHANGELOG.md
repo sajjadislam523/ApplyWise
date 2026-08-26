@@ -11,6 +11,12 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- **Password reset.** Request a link from the sign-in page, receive an email,
+  choose a new password. Tokens are 32 random bytes stored only as a SHA-256
+  hash, valid for 60 minutes, single-use, and superseded when a newer link is
+  requested. `forgot-password` answers identically whether or not the address has
+  an account, so it cannot be used to discover who is registered. Completing a
+  reset clears the stored refresh token, ending every other session.
 - Documentation system under `docs/` — architecture, API reference, data model,
   features, development, deployment, and accessibility, each with a stated source
   and a routing table describing which document a given change belongs in.
@@ -22,6 +28,14 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- **Login errors never appeared.** `frontend/src/lib/axios.ts` treated every 401
+  as an expired access token, so a failed login triggered the silent-refresh
+  flow. With no refresh token to send, `/auth/refresh` failed, the handler
+  hard-redirected via `window.location.href`, and the resulting page reload
+  destroyed React state before the message could paint — the form simply blanked.
+  The promise also rejected with the refresh error rather than the login error,
+  so even without the redirect the wrong message would have shown. Credential
+  endpoints are now excluded from the refresh path.
 - **Search fired one API request per keystroke.** The search box dispatched to
   Redux on every character, and the Redux filter state is part of the React Query
   key, so typing an eight-letter company name issued eight requests. Input is now

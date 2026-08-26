@@ -35,6 +35,17 @@ export const useRegister = () => {
     });
 };
 
+export const useForgotPassword = () =>
+    useMutation({
+        mutationFn: (email: string) => authApi.forgotPassword(email),
+    });
+
+export const useResetPassword = () =>
+    useMutation({
+        mutationFn: (input: { token: string; password: string }) =>
+            authApi.resetPassword(input),
+    });
+
 export const useLogout = () => {
     const dispatch = useAppDispatch();
     const refreshToken = useAppSelector((s) => s.auth.refreshToken);

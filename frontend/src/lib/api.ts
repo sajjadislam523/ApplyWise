@@ -52,6 +52,16 @@ export const authApi = {
     const { data } = await api.get<{ data: User }>('/auth/me');
     return data.data;
   },
+
+  forgotPassword: async (email: string) => {
+    const { data } = await api.post<{ message: string }>('/auth/forgot-password', { email });
+    return data.message;
+  },
+
+  resetPassword: async (input: { token: string; password: string }) => {
+    const { data } = await api.post<{ message: string }>('/auth/reset-password', input);
+    return data.message;
+  },
 };
 
 // ─── Jobs ─────────────────────────────────────────────────────────────────

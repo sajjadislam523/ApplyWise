@@ -1,9 +1,19 @@
+import crypto from 'crypto';
 import { Request, Response } from 'express';
 import User from '../models/User.model';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt';
 import { sendSuccess, sendError } from '../utils/apiResponse';
 import { asyncHandler } from '../middleware/error.middleware';
-import { sendWelcomeEmail } from '../utils/email';
+import { sendWelcomeEmail, sendPasswordResetEmail } from '../utils/email';
+
+// Reset links are short-lived — long enough to find the email, short enough
+// that an old one left in an inbox is not a standing key to the account.
+const RESET_TOKEN_TTL_MINUTES = 60;
+
+// Only the hash is stored, so the raw token in the email is the sole way to
+// use the link.
+const hashResetToken = (token: string): string =>
+  crypto.createHash('sha256').update(token).digest('hex');
 
 // ─── POST /api/auth/register ───────────────────────────────────────────────
 export const register = asyncHandler(async (req: Request, res: Response) => {
@@ -106,6 +116,73 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
     await User.findOneAndUpdate({ refreshToken }, { $unset: { refreshToken: 1 } });
   }
   return sendSuccess(res, null, 'Logged out successfully');
+});
+
+// ─── POST /api/auth/forgot-password ────────────────────────────────────────
+export const forgotPassword = asyncHandler(async (req: Request, res: Response) => {
+  const { email } = req.body;
+  if (!email) return sendError(res, 'Email is required', 400);
+
+  const user = await User.findOne({ email: String(email).toLowerCase().trim() });
+
+  // Always answer the same way. Varying the response — or the timing — would
+  // turn this endpoint into a way to discover which addresses have accounts.
+  const genericResponse = () =>
+    sendSuccess(
+      res,
+      null,
+      'If an account exists for that email, a reset link is on its way.'
+    );
+
+  if (!user) return genericResponse();
+
+  const rawToken = crypto.randomBytes(32).toString('hex');
+  user.passwordResetToken = hashResetToken(rawToken);
+  user.passwordResetExpires = new Date(Date.now() + RESET_TOKEN_TTL_MINUTES * 60 * 1000);
+  await user.save();
+
+  const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/auth/reset-password?token=${rawToken}`;
+
+  // Fire-and-forget, like every other send — a failing SMTP must not turn into
+  // a 500 that tells the caller this address exists.
+  sendPasswordResetEmail(user.email, user.name, resetUrl, RESET_TOKEN_TTL_MINUTES).catch((err) =>
+    console.error('[Auth] Password reset email failed:', err)
+  );
+
+  return genericResponse();
+});
+
+// ─── POST /api/auth/reset-password ─────────────────────────────────────────
+export const resetPassword = asyncHandler(async (req: Request, res: Response) => {
+  const { token, password } = req.body;
+
+  if (!token || !password) {
+    return sendError(res, 'Token and new password are required', 400);
+  }
+  if (String(password).length < 8) {
+    return sendError(res, 'Password must be at least 8 characters', 400);
+  }
+
+  const user = await User.findOne({
+    passwordResetToken: hashResetToken(String(token)),
+    passwordResetExpires: { $gt: new Date() },
+  }).select('+passwordResetToken +passwordResetExpires');
+
+  if (!user) {
+    return sendError(res, 'This reset link is invalid or has expired', 400);
+  }
+
+  // The pre-save hook hashes the new password.
+  user.password = password;
+  // Single use.
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  // Whoever requested the reset may not be whoever was signed in. Dropping the
+  // refresh token ends every existing session and forces a fresh login.
+  user.refreshToken = undefined;
+  await user.save();
+
+  return sendSuccess(res, null, 'Password updated — you can sign in now.');
 });
 
 // ─── GET /api/auth/me ──────────────────────────────────────────────────────

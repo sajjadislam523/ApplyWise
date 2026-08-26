@@ -6,6 +6,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
   refreshToken?: string;
+  passwordResetToken?: string;
+  passwordResetExpires?: Date;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -17,6 +19,10 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true, minlength: 8, select: false },
     refreshToken: { type: String, select: false },
+    // SHA-256 of the token that was emailed — never the token itself, so a
+    // database leak cannot be used to reset anyone's password.
+    passwordResetToken: { type: String, select: false },
+    passwordResetExpires: { type: Date, select: false },
   },
   { timestamps: true }
 );

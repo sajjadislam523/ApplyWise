@@ -55,17 +55,29 @@ export default function LoginPage() {
                             required
                             autoFocus
                         />
-                        <Input
-                            label="Password"
-                            type="password"
-                            name="password"
-                            autoComplete="current-password"
-                            spellCheck={false}
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                        <div className="space-y-1">
+                            <Input
+                                label="Password"
+                                type="password"
+                                name="password"
+                                autoComplete="current-password"
+                                spellCheck={false}
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <div className="flex justify-end">
+                                <Link
+                                    href="/auth/forgot-password"
+                                    className="text-xs text-[#8B98A8] hover:text-[#6EE7B7] transition-colors
+                                               rounded-sm focus-visible:outline-hidden focus-visible:ring-1
+                                               focus-visible:ring-[#6EE7B7]/50"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </div>
+                        </div>
 
                         {apiError && (
                             <p role="alert" className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2">

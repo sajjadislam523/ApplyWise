@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { InputHTMLAttributes, forwardRef, useId } from 'react';
 import { cn } from '@/lib/utils';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -9,7 +9,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, hint, className, id, ...props }, ref) => {
-    const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
+    // Deriving the id from the label text collides whenever two fields share a
+    // label on the same page, which silently breaks htmlFor.
+    const generatedId = useId();
+    const inputId = id ?? generatedId;
+    const errorId = `${inputId}-error`;
     return (
       <div className="flex flex-col gap-1">
         {label && (
@@ -19,17 +23,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <input
           ref={ref} id={inputId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? errorId : undefined}
           className={cn(
             'h-9 w-full rounded-lg border bg-white/4 px-3 text-sm text-white placeholder:text-[#4A5568]',
-            'border-white/8 hover:border-white/15 transition-colors',
-            'focus:border-[#6EE7B7]/50 focus:outline-hidden focus:ring-1 focus:ring-[#6EE7B7]/30',
-            error && 'border-red-700/50 focus:border-red-500/50 focus:ring-red-500/20',
+            'border-white/8 hover:border-white/15 transition-colors touch-manipulation',
+            'focus-visible:border-[#6EE7B7]/50 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#6EE7B7]/30',
+            error && 'border-red-700/50 focus-visible:border-red-500/50 focus-visible:ring-red-500/20',
             props.disabled && 'opacity-50 cursor-not-allowed',
             className
           )}
           {...props}
         />
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && <p id={errorId} className="text-xs text-red-400">{error}</p>}
         {hint && !error && <p className="text-xs text-[#4A5568]">{hint}</p>}
       </div>
     );

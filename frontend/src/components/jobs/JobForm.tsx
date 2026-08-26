@@ -106,7 +106,7 @@ export function JobForm({ editingId }: { editingId: string | null }) {
     )?.response?.data?.message;
 
     const fieldClass =
-        "h-9 w-full rounded-lg border bg-white/4 px-3 text-sm text-white placeholder:text-[#4A5568] border-white/8 focus:border-[#6EE7B7]/50 focus:outline-hidden focus:ring-1 focus:ring-[#6EE7B7]/30 transition-colors";
+        "h-9 w-full rounded-lg border bg-white/4 px-3 text-sm text-white placeholder:text-[#4A5568] border-white/8 focus-visible:border-[#6EE7B7]/50 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#6EE7B7]/30 transition-colors touch-manipulation";
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -141,7 +141,7 @@ export function JobForm({ editingId }: { editingId: string | null }) {
                         set("location", e.target.value as LocationType)
                     }
                     options={LOCATION_OPTIONS}
-                    placeholder="Select..."
+                    placeholder="Select…"
                 />
                 <Input
                     label="Applied on"
@@ -169,19 +169,27 @@ export function JobForm({ editingId }: { editingId: string | null }) {
 
             <Input
                 label="Job posting URL"
+                type="url"
+                inputMode="url"
+                spellCheck={false}
                 value={form.jobLink}
                 onChange={(e) => set("jobLink", e.target.value)}
-                placeholder="https://..."
+                placeholder="https://example.com/jobs/123"
             />
 
             {/* Tags */}
             <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-[#8B98A8] uppercase tracking-wide">
+                <label
+                    htmlFor="job-tag-input"
+                    className="text-xs font-medium text-[#8B98A8] uppercase tracking-wide"
+                >
                     Tags
                 </label>
                 <div className="flex gap-2">
                     <input
+                        id="job-tag-input"
                         className={fieldClass}
+                        spellCheck={false}
                         placeholder="Add tag and press Enter"
                         value={tagInput}
                         onChange={(e) => setTagInput(e.target.value)}
@@ -212,15 +220,18 @@ export function JobForm({ editingId }: { editingId: string | null }) {
                                 {t}
                                 <button
                                     type="button"
+                                    aria-label={`Remove tag ${t}`}
                                     onClick={() =>
                                         set(
                                             "tags",
                                             form.tags.filter((x) => x !== t),
                                         )
                                     }
-                                    className="text-[#4A5568] hover:text-white"
+                                    className="p-1 -m-0.5 rounded-sm text-[#4A5568] hover:text-white
+                                               touch-manipulation transition-colors
+                                               focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-white/40"
                                 >
-                                    ×
+                                    <span aria-hidden="true">×</span>
                                 </button>
                             </span>
                         ))}
@@ -242,29 +253,37 @@ export function JobForm({ editingId }: { editingId: string | null }) {
                 {form.followUpSent && (
                     <input
                         type="date"
+                        aria-label="Follow-up date"
                         value={(form.followUpDate as string) || ""}
                         onChange={(e) => set("followUpDate", e.target.value)}
                         className={`${fieldClass} w-40`}
                     />
                 )}
                 <div className="ml-auto flex items-center gap-2 text-sm">
-                    <label className="text-[#8B98A8]">Timeout</label>
+                    <label htmlFor="job-timeout-days" className="text-[#8B98A8]">
+                        Timeout
+                    </label>
                     <input
+                        id="job-timeout-days"
                         type="number"
+                        inputMode="numeric"
                         min={1}
                         max={365}
                         value={form.timeoutDays}
                         onChange={(e) =>
                             set("timeoutDays", parseInt(e.target.value, 10))
                         }
-                        className="w-16 h-8 text-center rounded-lg border border-white/8 bg-white/4 text-sm text-white focus:outline-hidden focus:border-[#6EE7B7]/50"
+                        className="w-16 h-8 text-center rounded-lg border border-white/8 bg-white/4 text-sm text-white touch-manipulation focus-visible:outline-hidden focus-visible:border-[#6EE7B7]/50 focus-visible:ring-1 focus-visible:ring-[#6EE7B7]/30"
                     />
                     <span className="text-[#4A5568] text-xs">days</span>
                 </div>
             </div>
 
             {apiError && (
-                <p className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2">
+                <p
+                    role="alert"
+                    className="text-sm text-red-400 bg-red-950/50 border border-red-900/50 rounded-lg px-3 py-2"
+                >
                     {apiError}
                 </p>
             )}

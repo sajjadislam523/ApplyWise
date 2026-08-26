@@ -9,7 +9,7 @@ const lineVariants = {
 
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
     return (
-        <div className="w-4 h-3.5 flex flex-col justify-between">
+        <div aria-hidden="true" className="w-4 h-3.5 flex flex-col justify-between">
             <motion.span
                 className="h-0.5 bg-white block "
                 animate={isOpen ? "openTop" : "closed"}

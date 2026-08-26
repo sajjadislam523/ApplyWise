@@ -1,7 +1,6 @@
 'use client';
 
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { Job } from '@/types/job';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Button } from '@/components/ui/Button';
@@ -9,15 +8,13 @@ import { cn } from '@/lib/utils';
 import { useAppDispatch } from '@/store';
 import { openEditModal, openDeleteConfirm } from '@/store/uiSlice';
 
-dayjs.extend(relativeTime);
-
 export function JobCard({ job }: { job: Job }) {
   const dispatch = useAppDispatch();
 
   return (
     <div className={cn(
       'group relative rounded-xl border border-white/[0.07] bg-[#0F1419] p-5 flex flex-col gap-3',
-      'hover:border-white/[0.14] hover:bg-[#161C24] transition-all duration-200',
+      'hover:border-white/[0.14] hover:bg-[#161C24] transition-[background-color,border-color] duration-200',
       job.isStale && 'card-stale'
     )}>
       {/* accent line */}
@@ -45,7 +42,9 @@ export function JobCard({ job }: { job: Job }) {
         {job.location && <span className="capitalize">{job.location}</span>}
         {job.salary   && <span>{job.salary}</span>}
         <span>{dayjs(job.applicationDate).format('MMM D, YYYY')}</span>
-        {job.followUpSent && <span className="text-[#6EE7B7]">✓ Followed up</span>}
+        {job.followUpSent && (
+          <span className="text-[#6EE7B7]"><span aria-hidden="true">✓</span> Followed up</span>
+        )}
       </div>
 
       {/* Tags */}

@@ -21,12 +21,21 @@ export function Navbar({
                         justify-between px-6 shrink-0"
         >
             <div className="flex items-center">
-                <button onClick={onMenuClick} className="md:hidden mr-4">
+                <button
+                    type="button"
+                    onClick={onMenuClick}
+                    aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                    aria-expanded={isOpen}
+                    aria-controls="sidebar-nav"
+                    className="md:hidden mr-4 p-2 -ml-2 rounded-lg text-white touch-manipulation
+                               hover:bg-white/5 transition-colors
+                               focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30"
+                >
                     <HamburgerIcon isOpen={isOpen} />
                 </button>
             </div>
-            <div className="flex items-center gap-4">
-                <span className="text-sm text-[#8B98A8]">{user?.name}</span>
+            <div className="flex items-center gap-4 min-w-0">
+                <span className="text-sm text-[#8B98A8] truncate max-w-48">{user?.name}</span>
                 <Button
                     variant="ghost"
                     size="sm"

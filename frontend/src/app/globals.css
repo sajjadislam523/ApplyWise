@@ -105,6 +105,9 @@
 
     html {
         scroll-behavior: smooth;
+        /* Tells the UA to render native scrollbars, date pickers and select
+           dropdowns dark — without it they paint light on this dark theme. */
+        color-scheme: dark;
     }
 
     body {

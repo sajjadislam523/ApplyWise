@@ -259,11 +259,11 @@ export default function LandingPage() {
                     <Link
                         href="/auth/register"
                         className="group px-7 py-3.5 rounded-xl bg-[#6EE7B7] text-[#080C10] font-display
-                       font-700 text-sm hover:bg-[#5BCFAA] transition-all duration-200
+                       font-700 text-sm hover:bg-[#5BCFAA] transition-[background-color,box-shadow] duration-200
                        shadow-[0_0_40px_rgba(110,231,183,0.25)] hover:shadow-[0_0_60px_rgba(110,231,183,0.4)]"
                     >
                         Start for free
-                        <span className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">
+                        <span aria-hidden="true" className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">
                             →
                         </span>
                     </Link>
@@ -271,7 +271,7 @@ export default function LandingPage() {
                         href="/auth/login"
                         className="px-7 py-3.5 rounded-xl border border-white/10 bg-white/4
                        text-sm font-medium text-[#8B98A8] hover:text-white hover:border-white/20
-                       hover:bg-white/[0.07] transition-all duration-200 backdrop-blur-xs"
+                       hover:bg-white/[0.07] transition-[color,background-color,border-color] duration-200 backdrop-blur-xs"
                     >
                         Sign in to dashboard
                     </Link>
